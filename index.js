@@ -66,6 +66,9 @@ app.get("/agregar", (req, res) => {
 
 app.get("/editar", (req, res) => {
     const { nombre, precio } = req.query;
+    if (isNaN(Number(precio)) || Number(precio) < 0) {
+        return res.send("Ingrese un precio válido")
+    }
     editar(nombre, precio)
     res.sendStatus(200)
 
