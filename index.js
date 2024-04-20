@@ -93,3 +93,8 @@ app.get("/deportes", (req, res) => {
     res.json(leer())
 }
 )
+
+//Ruta genérica
+app.get('*', (req, res) => {
+    res.send('Ruta inválida :c\n <a href="/"><button>Ir al inicio</button></a>')
+})
