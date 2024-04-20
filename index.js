@@ -35,14 +35,33 @@ function eliminar(nombre) {
     actualizar(noEliminados)
 }
 
+// function validacionesNombre(nombre){
+//     if(nombre=='' || !/^[a-zA-Z\s]+$/.test(nombre)){
+//         return false
+//     }else{
+//         return true
+//     }
+// }
+
 app.get("/", (req, res) => {
     res.sendFile(__dirname + "/index.html")
 })
 
 app.get("/agregar", (req, res) => {
     const { nombre, precio } = req.query
-    agregar(nombre, precio)
-    res.sendStatus(200)
+    if (nombre == '' || !/^[a-zA-Z\s]+$/.test(nombre)) {
+        return res.send("Ingrese un nombre válido")
+    }
+
+    if (isNaN(Number(precio)) || Number(precio) < 0) {
+        return res.send("Ingrese un precio válido")
+    }
+
+    if (!leer().deportes.map(deporte => deporte.nombre).includes(nombre)) {
+        agregar(nombre, precio)
+        return res.sendStatus(200)
+    }
+    res.send("Ya existe el deporte")
 })
 
 app.get("/editar", (req, res) => {
